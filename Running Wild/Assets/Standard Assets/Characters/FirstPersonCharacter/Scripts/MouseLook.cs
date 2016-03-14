@@ -7,15 +7,13 @@ namespace UnityStandardAssets.Characters.FirstPerson
     [Serializable]
     public class MouseLook
     {
-        public float XSensitivity = 2f;
-        public float YSensitivity = 2f;
-        public bool clampVerticalRotation = true;
-        public float MinimumX = -90F;
-        public float MaximumX = 90F;
+        public float XSensitivity = 4f;
+        public bool clampHorizontalRotation = true;
+        public float MinimumZ = -45F;
+        public float MaximumZ = 45F;
         public bool smooth;
         public float smoothTime = 5f;
         public bool lockCursor = true;
-
 
         private Quaternion m_CharacterTargetRot;
         private Quaternion m_CameraTargetRot;
@@ -27,19 +25,17 @@ namespace UnityStandardAssets.Characters.FirstPerson
             m_CameraTargetRot = camera.localRotation;
         }
 
-
         public void LookRotation(Transform character, Transform camera)
         {
-            float yRot = CrossPlatformInputManager.GetAxis("Mouse X") * XSensitivity;
-            float xRot = CrossPlatformInputManager.GetAxis("Mouse Y") * YSensitivity;
+            float zRot = Input.acceleration.x * XSensitivity;
+            m_CharacterTargetRot *= Quaternion.Euler (0f, 0f, -zRot);
 
-            m_CharacterTargetRot *= Quaternion.Euler (0f, yRot, 0f);
-            m_CameraTargetRot *= Quaternion.Euler (-xRot, 0f, 0f);
+            if (clampHorizontalRotation)
+            {
+                m_CharacterTargetRot = ClampRotationAroundZAxis(m_CharacterTargetRot);
+            }
 
-            if(clampVerticalRotation)
-                m_CameraTargetRot = ClampRotationAroundXAxis (m_CameraTargetRot);
-
-            if(smooth)
+            if (smooth)
             {
                 character.localRotation = Quaternion.Slerp (character.localRotation, m_CharacterTargetRot,
                     smoothTime * Time.deltaTime);
@@ -69,7 +65,10 @@ namespace UnityStandardAssets.Characters.FirstPerson
         {
             //if the user set "lockCursor" we check & properly lock the cursos
             if (lockCursor)
+            {
                 InternalLockUpdate();
+            }
+                
         }
 
         private void InternalLockUpdate()
@@ -95,21 +94,20 @@ namespace UnityStandardAssets.Characters.FirstPerson
             }
         }
 
-        Quaternion ClampRotationAroundXAxis(Quaternion q)
+        Quaternion ClampRotationAroundZAxis(Quaternion q)
         {
             q.x /= q.w;
             q.y /= q.w;
             q.z /= q.w;
             q.w = 1.0f;
 
-            float angleX = 2.0f * Mathf.Rad2Deg * Mathf.Atan (q.x);
+            float angleZ = 2.0f * Mathf.Rad2Deg * Mathf.Atan (q.z);
 
-            angleX = Mathf.Clamp (angleX, MinimumX, MaximumX);
+            angleZ = Mathf.Clamp (angleZ, MinimumZ, MaximumZ);
 
-            q.x = Mathf.Tan (0.5f * Mathf.Deg2Rad * angleX);
+            q.z = Mathf.Tan (0.5f * Mathf.Deg2Rad * angleZ);
 
             return q;
         }
-
     }
 }

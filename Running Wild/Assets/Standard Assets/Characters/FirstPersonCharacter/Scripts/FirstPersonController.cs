@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 using UnityStandardAssets.CrossPlatformInput;
 using UnityStandardAssets.Utility;
@@ -61,7 +60,6 @@ namespace UnityStandardAssets.Characters.FirstPerson
         // Update is called once per frame
         private void Update()
         {
-            RotateView();
             // the jump state needs to read here to make sure it is not missed
             if (!m_Jump)
             {
@@ -179,10 +177,10 @@ namespace UnityStandardAssets.Characters.FirstPerson
 
         private void GetInput(out float speed)
         {
+            RotateView();;
             // Read input
             float horizontal = Input.acceleration.x * 60f;
-            float vertical = 30f;
-            RotateCamera(Input.acceleration.x);
+            float vertical = 30f;//SPEED IS HARDCODED HERE
 
             bool waswalking = m_IsWalking;
 
@@ -210,17 +208,10 @@ namespace UnityStandardAssets.Characters.FirstPerson
             }
         }
 
-        private void RotateCamera(float rotationFactorX)
-        {
-            this.transform.Rotate(new Vector3(0f,0f,45f));
-        }
-
-
         private void RotateView()
         {
-            m_MouseLook.LookRotation (transform, m_Camera.transform);
+            m_MouseLook.LookRotation(transform,m_Camera.transform);
         }
-
 
         private void OnControllerColliderHit(ControllerColliderHit hit)
         {
