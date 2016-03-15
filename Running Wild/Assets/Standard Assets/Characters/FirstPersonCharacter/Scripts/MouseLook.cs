@@ -9,8 +9,8 @@ namespace UnityStandardAssets.Characters.FirstPerson
     {
         public float XSensitivity = 4f;
         public bool clampHorizontalRotation = true;
-        public float MinimumZ = -45F;
-        public float MaximumZ = 45F;
+        public float MinimumZ = -30F;
+        public float MaximumZ = 30F;
         public bool smooth;
         public float smoothTime = 5f;
         public bool lockCursor = true;

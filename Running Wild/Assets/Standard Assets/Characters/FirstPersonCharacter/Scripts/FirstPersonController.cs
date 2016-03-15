@@ -181,7 +181,8 @@ namespace UnityStandardAssets.Characters.FirstPerson
             // Read input
             float horizontal = Input.acceleration.x * 60f;
             float vertical = 30f;//SPEED IS HARDCODED HERE
-
+            m_MouseLook.MaximumZ = Input.acceleration.x*-30;
+            m_MouseLook.MinimumZ = Input.acceleration.x*-30;
             bool waswalking = m_IsWalking;
 
 #if !MOBILE_INPUT
