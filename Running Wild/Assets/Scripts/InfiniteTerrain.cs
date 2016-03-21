@@ -70,10 +70,10 @@ public class InfiniteTerrain : MonoBehaviour
 		_terrainGrid[2,1].SetNeighbors(_terrainGrid[1,1], _terrainGrid[2,0],              null, _terrainGrid[2,2]);
 		_terrainGrid[2,2].SetNeighbors(_terrainGrid[1,2], _terrainGrid[2,1],              null,              null);
 	}
-	
-	void Update ()
+    
+	void OnGUI()
 	{
-		Vector3 playerPosition = new Vector3(PlayerObject.transform.position.x, PlayerObject.transform.position.y, PlayerObject.transform.position.z);
+        Vector3 playerPosition = new Vector3(PlayerObject.transform.position.x, PlayerObject.transform.position.y, PlayerObject.transform.position.z);
 		Terrain playerTerrain = null;
 		int xOffset = 0;
 		int yOffset = 0;
