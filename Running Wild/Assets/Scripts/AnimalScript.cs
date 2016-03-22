@@ -21,7 +21,6 @@ public class AnimalScript : MonoBehaviour {
             transform.position += transform.forward * moveSpeed * Time.deltaTime;
 
 
-
             if (Vector3.Distance(transform.position, this.player.position) <= maxDist)
             {
                 //Here Call any function U want Like Shoot at here or something
