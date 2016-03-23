@@ -15,7 +15,7 @@ public class TreeScript : MonoBehaviour {
 	void Update () {
         if (transform.position.z +200< this.player.position.z)
         {
-            //Destroy(gameObject); this destroys the game object and GO needs to be reloaded in order to build another forest.
+            Destroy(gameObject); //this destroys the game object and GO needs to be reloaded in order to build another forest.
         }
     }
 }
