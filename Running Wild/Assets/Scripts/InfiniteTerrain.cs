@@ -6,10 +6,6 @@ public class InfiniteTerrain : MonoBehaviour
 {
     public GameObject PlayerObject;
 
-    public int NumberOfForests;
-
-    private List<GameObject> Forests;
-
     private Terrain[,] _terrainGrid = new Terrain[3, 3];
 
     void Start()
@@ -26,12 +22,6 @@ public class InfiniteTerrain : MonoBehaviour
         _terrainGrid[2, 0] = Terrain.CreateTerrainGameObject(linkedTerrain.terrainData).GetComponent<Terrain>();
         _terrainGrid[2, 1] = Terrain.CreateTerrainGameObject(linkedTerrain.terrainData).GetComponent<Terrain>();
         _terrainGrid[2, 2] = Terrain.CreateTerrainGameObject(linkedTerrain.terrainData).GetComponent<Terrain>();
-
-        Forests = new List<GameObject>();
-        Forests.Add(Instantiate(Resources.Load("Prefabs/Forest1", typeof(GameObject))) as GameObject);
-        Forests.Add(Instantiate(Resources.Load("Prefabs/Forest2", typeof(GameObject))) as GameObject);
-        Forests.Add(Instantiate(Resources.Load("Prefabs/Forest1", typeof(GameObject))) as GameObject);
-        Forests.Add(Instantiate(Resources.Load("Prefabs/Forest2", typeof(GameObject))) as GameObject);
 
         UpdateTerrainPositionsAndNeighbors();
     }
@@ -83,31 +73,10 @@ public class InfiniteTerrain : MonoBehaviour
         _terrainGrid[2, 1].SetNeighbors(_terrainGrid[1, 1], _terrainGrid[2, 0], null, _terrainGrid[2, 2]);
         _terrainGrid[2, 2].SetNeighbors(_terrainGrid[1, 2], _terrainGrid[2, 1], null, null);
 
-        GenerateForests(NumberOfForests);
-
 
     }
 
-    private void GenerateForests(int numberOfForests)
-    {
-        int[] parameters = GetRandomParams();
-        for (int i = 0; i < numberOfForests; i++)
-        {
-            Instantiate(Forests[parameters[2]], new Vector3(parameters[0], 0, parameters[1]), Quaternion.Euler(0, UnityEngine.Random.Range(0, 360), 0));
-            parameters = GetRandomParams();
-        }
-    }
 
-    private int[] GetRandomParams()
-    {
-        int[] toReturn = new int[3];
-        toReturn[0] = UnityEngine.Random.Range((int)PlayerObject.transform.position.x - 400, (int)PlayerObject.transform.position.x + 400); //X limit
-        toReturn[1] = UnityEngine.Random.Range((int)PlayerObject.transform.position.z + 200, (int)PlayerObject.transform.position.z + 1000); //Z Limit
-        toReturn[2] = UnityEngine.Random.Range(0, 2); // Number of forest prefabs
-        return toReturn;
-
-
-    }
 
     void OnGUI()
     {

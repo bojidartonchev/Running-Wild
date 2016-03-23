@@ -9,7 +9,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
         public Camera Camera;
         public CurveControlledBob motionBob = new CurveControlledBob();
         public LerpControlledBob jumpAndLandingBob = new LerpControlledBob();
-        public RigidbodyFirstPersonController rigidbodyFirstPersonController;
+        private RigidbodyFirstPersonController rigidbodyFirstPersonController;
         public float StrideInterval;
         [Range(0f, 1f)] public float RunningStrideLengthen;
 
@@ -20,6 +20,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
 
         private void Start()
         {
+            this.rigidbodyFirstPersonController = GameObject.Find("FPSController").GetComponent<RigidbodyFirstPersonController>();
             motionBob.Setup(Camera, StrideInterval);
             m_OriginalCameraPosition = Camera.transform.localPosition;
        //     m_CameraRefocus = new CameraRefocus(Camera, transform.root.transform, Camera.transform.localPosition);
