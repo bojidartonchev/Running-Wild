@@ -37,12 +37,16 @@ public class ForestGenerator : MonoBehaviour
         {
             int randomForestIndex = UnityEngine.Random.Range(0, 2);
             GameObject currForest = Instantiate(this.forests[randomForestIndex]);
+            currForest.transform.parent = GameObject.Find("Terrain").transform;
             var randomOffset = Random.Range(this.minYOffset, this.maxYOffset);
             var randomTime = Random.Range(this.minSpawnTime, this.maxSpawnTime);
-            currForest.transform.position = new Vector3(player.transform.position.x, player.transform.position.y-1.2f, player.transform.position.z) + (transform.forward * this.spawnDistance) + (transform.right * randomOffset);
+
+            currForest.transform.position = new Vector3(player.transform.position.x, 30, player.transform.position.z) + (transform.forward * this.spawnDistance) + (transform.right * randomOffset);
             currForest.transform.rotation = Quaternion.Euler(0, Random.Range(0, 360), 0);
+          
             yield return new WaitForSeconds(randomTime);
         }
+
     }
 
 

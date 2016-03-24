@@ -13,9 +13,9 @@ public class TreeScript : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        if (transform.position.z +200< this.player.position.z)
+        if (transform.position.z +200 < this.player.position.z)
         {
-            Destroy(gameObject); //this destroys the game object and GO needs to be reloaded in order to build another forest.
+            Destroy(gameObject); 
         }
     }
 }

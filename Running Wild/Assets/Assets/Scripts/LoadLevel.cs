@@ -14,13 +14,13 @@ public class LoadLevel : MonoBehaviour
 
     public void StartLoading()
     {
+        loadingImage.SetActive(true);
         StartCoroutine(LoadLevelWithBar());
     }
 
 
     IEnumerator LoadLevelWithBar()
     {
-        loadingImage.SetActive(true);
         async = SceneManager.LoadSceneAsync(1);
         while (!async.isDone)
         {
