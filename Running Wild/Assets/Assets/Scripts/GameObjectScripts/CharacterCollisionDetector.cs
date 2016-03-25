@@ -25,6 +25,5 @@ public class CharacterCollisionDetector : MonoBehaviour {
     void OnCollisionEnter(Collision collision)
     {
         Debug.Log(collision.gameObject.tag);
-        SceneManager.LoadScene(0);
     }
 }
