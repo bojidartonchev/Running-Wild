@@ -3,11 +3,15 @@ using System.Collections;
 
 public class SetKinematic : MonoBehaviour {
 
-    void OnTriggerEnter(Collider collider)
+    void Update()
     {
-        if (collider.tag == "Terrain")
+        var currRigidBody = GetComponent<Rigidbody>();
+        if (currRigidBody.velocity.y==0)
         {
-            GetComponent<Rigidbody>().isKinematic = true;
+
+            currRigidBody.constraints = RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionY | RigidbodyConstraints.FreezePositionZ |
+                RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationY | RigidbodyConstraints.FreezeRotationZ;
+            this.enabled = false;
         }
     }
 }
