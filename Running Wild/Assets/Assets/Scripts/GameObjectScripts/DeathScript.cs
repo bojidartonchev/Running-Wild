@@ -3,7 +3,7 @@ using System.Collections;
 using UnityStandardAssets.Characters.FirstPerson;
 
 public class DeathScript : MonoBehaviour {
-    public Transform camera;
+    private Transform camera;
     // Use this for initialization
     void Start () {
         GameObject.Find("FPSController").GetComponent<FirstPersonController>().enabled = false;

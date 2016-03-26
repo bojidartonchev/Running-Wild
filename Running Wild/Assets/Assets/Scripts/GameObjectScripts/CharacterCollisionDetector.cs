@@ -35,5 +35,5 @@ public class CharacterCollisionDetector : MonoBehaviour {
         {
             gameObject.AddComponent<TreeBump>();
         }
-    }
+    }    
 }

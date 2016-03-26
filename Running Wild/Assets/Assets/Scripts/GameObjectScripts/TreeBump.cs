@@ -2,9 +2,10 @@
 using System.Collections;
 using UnityStandardAssets.Characters.FirstPerson;
 
-public class TreeBump : MonoBehaviour {
-    public Transform camera;
+public class TreeBump : MonoBehaviour {   
     public GameObject arms;
+
+    private Transform camera;
     // Use this for initialization
     void Start()
     {
