@@ -1,7 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class AnimalGenerator : MonoBehaviour {
+public class AnimalGenerator : MonoBehaviour
+{
     public GameObject dinosaur;
     public GameObject player;
     public float spawnDistance;
@@ -9,15 +10,17 @@ public class AnimalGenerator : MonoBehaviour {
     public float minYOffset;
     public float maxYOffset;
 
-    
+
     // Use this for initialization
-    void Start () {
-        StartCoroutine(Spawner());        
+    void Start()
+    {
+        StartCoroutine(Spawner());
     }
-	
-	// Update is called once per frame
-	void Update () {
-       
+
+    // Update is called once per frame
+    void Update()
+    {
+
     }
     public IEnumerator Spawner()
     {
@@ -26,10 +29,10 @@ public class AnimalGenerator : MonoBehaviour {
         while (flag)
         {
             var randomOffset = Random.Range(this.minYOffset, this.maxYOffset);
-            GameObject newHorse = Instantiate(dinosaur);
-            newHorse.transform.position = player.transform.position + (transform.forward * this.spawnDistance) + (transform.right*randomOffset);
-            newHorse.transform.LookAt(player.transform);
-                     
+            GameObject animal = Instantiate(dinosaur);
+            animal.transform.position = new Vector3(player.transform.position.x, 5, player.transform.position.z) + (transform.forward * this.spawnDistance) + (transform.right * randomOffset);
+            animal.transform.LookAt(player.transform);
+
 
             yield return new WaitForSeconds(this.spawnTime);
         }
