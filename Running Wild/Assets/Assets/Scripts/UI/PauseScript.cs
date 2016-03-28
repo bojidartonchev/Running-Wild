@@ -22,12 +22,17 @@ public class PauseScript : MonoBehaviour
         this.pauseCanvas.enabled = true;
         Time.timeScale = 0;
     }
+
     public void Resume()
     {
-        GameObject.Find("FPSController").GetComponent<FirstPersonController>().enabled = true;
+        if (!GameObject.Find("FPSController").GetComponent<CharacterCollisionDetector>().IsDead)
+        {
+            GameObject.Find("FPSController").GetComponent<FirstPersonController>().enabled = true;
+        }
         this.pauseCanvas.enabled = false;
         Time.timeScale = 1;
     }
+
     void OnApplicationPause(bool pauseStatus)
     {
         if (pauseStatus)

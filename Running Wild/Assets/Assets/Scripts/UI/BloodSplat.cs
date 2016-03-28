@@ -6,7 +6,7 @@ public class BloodSplat : MonoBehaviour {
     CanvasGroup properties;
     // Use this for initialization
     void Start () {
-        properties = GameObject.Find("BloodScreen").GetComponent<CanvasGroup>();
+        properties = GetComponent<CanvasGroup>();
         StartCoroutine(Fade());
     }
 

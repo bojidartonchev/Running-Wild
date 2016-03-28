@@ -1,13 +1,12 @@
-﻿using UnityEngine;
-using System.Collections;
-using UnityEngine.SceneManagement;
+﻿using Assets.Assets.Scripts.GameObjectScripts;
+using UnityEngine;
 
 public class CharacterCollisionDetector : MonoBehaviour {
-
-    private bool isDead;
+    
+    public bool IsDead { get; private set; }
 	// Use this for initialization
 	void Start () {
-        isDead = false;
+        this.IsDead = false;
 	}
 	
 	// Update is called once per frame
@@ -15,7 +14,6 @@ public class CharacterCollisionDetector : MonoBehaviour {
         
     }
 
-    
     void OnTriggerEnter(Collider collision)
     {
         if (collision.tag == "Animal")
@@ -23,13 +21,14 @@ public class CharacterCollisionDetector : MonoBehaviour {
             collision.gameObject.GetComponent<Animation>().Play("Attack");
         }
     }
+
     void OnCollisionEnter(Collision collision)
     {
         Debug.Log(collision.gameObject.tag);
-        if (collision.gameObject.tag == "Animal" &&  !isDead)
+        if (collision.gameObject.tag == "Animal" &&  !this.IsDead)
         {
             gameObject.AddComponent<DeathScript>();
-            isDead = true;
+            this.IsDead = true;
         }
         if (collision.gameObject.tag == "Tree")
         {
