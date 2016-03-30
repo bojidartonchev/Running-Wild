@@ -1,13 +1,17 @@
-﻿using UnityEngine;
+﻿using Assets.Assets.Scripts.GameObjectScripts;
+using UnityEngine;
 using UnityStandardAssets.Characters.FirstPerson;
 
 public class PauseScript : MonoBehaviour
 {
     public Canvas pauseCanvas;
+    
+    private GameObject player;
+
     // Use this for initialization
     void Start()
     {
-
+        this.player = GameObject.Find("Player");
     }
 
     // Update is called once per frame
@@ -18,16 +22,16 @@ public class PauseScript : MonoBehaviour
 
     public void Pause()
     {
-        GameObject.Find("FPSController").GetComponent<FirstPersonController>().enabled = false;
+        this.player.GetComponent<FirstPersonController>().enabled = false;
         this.pauseCanvas.enabled = true;
         Time.timeScale = 0;
     }
 
     public void Resume()
     {
-        if (!GameObject.Find("FPSController").GetComponent<CharacterCollisionDetector>().IsDead)
+        if (!this.player.GetComponent<CharacterCollisionDetector>().IsDead)
         {
-            GameObject.Find("FPSController").GetComponent<FirstPersonController>().enabled = true;
+            this.player.GetComponent<FirstPersonController>().enabled = true;
         }
         this.pauseCanvas.enabled = false;
         Time.timeScale = 1;

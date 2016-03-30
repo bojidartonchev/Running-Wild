@@ -9,7 +9,7 @@ namespace Assets.Assets.Scripts.GameObjectScripts
 
         // Use this for initialization
         void Start () {
-            GameObject.Find("FPSController").GetComponent<FirstPersonController>().enabled = false;
+            GameObject.Find("Player").GetComponent<FirstPersonController>().enabled = false;
             GameObject.Find("AnimalGenerator").SetActive(false);
             GameObject.Find("EnvironmentGenerator").SetActive(false);
             camera = GameObject.Find("Main Camera").GetComponent<Transform>();

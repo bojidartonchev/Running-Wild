@@ -10,7 +10,7 @@ public class AnimalScript : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        this.player = GameObject.Find("FPSController").GetComponent<Transform>();
+        this.player = GameObject.Find("Player").GetComponent<Transform>();
     }
 
     // Update is called once per frame
