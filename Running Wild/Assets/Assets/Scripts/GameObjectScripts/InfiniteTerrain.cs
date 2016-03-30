@@ -23,6 +23,17 @@ public class InfiniteTerrain : MonoBehaviour
         _terrainGrid[2, 1] = Terrain.CreateTerrainGameObject(linkedTerrain.terrainData).GetComponent<Terrain>();
         _terrainGrid[2, 2] = Terrain.CreateTerrainGameObject(linkedTerrain.terrainData).GetComponent<Terrain>();
 
+        for (int i = 0; i < _terrainGrid.GetLength(0); i++)
+        {
+            for (int j = 0; j < _terrainGrid.GetLength(1); j++)
+            {
+                _terrainGrid[i, j].basemapDistance = linkedTerrain.basemapDistance;
+                _terrainGrid[i, j].heightmapPixelError = linkedTerrain.heightmapPixelError;
+                _terrainGrid[i, j].treeCrossFadeLength = linkedTerrain.treeCrossFadeLength;
+                _terrainGrid[i, j].detailObjectDistance = linkedTerrain.detailObjectDistance;
+            }
+        }
+
         UpdateTerrainPositionsAndNeighbors();
     }
 

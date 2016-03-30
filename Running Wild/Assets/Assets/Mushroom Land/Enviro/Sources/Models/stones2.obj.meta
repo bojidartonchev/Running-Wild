@@ -3,7 +3,14 @@ guid: 013efc7b632bc6a4abcfb295fdf81905
 ModelImporter:
   serializedVersion: 19
   fileIDToRecycleName:
+    100000: polySurface24
+    100002: //RootNode
+    400000: polySurface24
+    400002: //RootNode
+    2300000: polySurface24
+    3300000: polySurface24
     4300000: polySurface24
+    11100000: //RootNode
   materials:
     importMaterials: 0
     materialName: 0
