@@ -3,7 +3,14 @@ guid: 61beabc40d02ada4db5af6a646724639
 ModelImporter:
   serializedVersion: 19
   fileIDToRecycleName:
+    100000: pSphere1
+    100002: //RootNode
+    400000: pSphere1
+    400002: //RootNode
+    2300000: pSphere1
+    3300000: pSphere1
     4300000: pSphere1
+    11100000: //RootNode
   materials:
     importMaterials: 0
     materialName: 0
