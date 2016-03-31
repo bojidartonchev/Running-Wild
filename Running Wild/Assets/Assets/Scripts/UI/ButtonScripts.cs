@@ -2,10 +2,13 @@
 using System.Collections;
 using UnityEngine.SceneManagement;
 
-public class ButtonScripts : MonoBehaviour {
+public class ButtonScripts : MonoBehaviour
+{
+    public GameObject profileDropdownMenu;
+    public GameObject gameDropdownMenu;
 
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start () {
 	    
 	}
 	
@@ -17,5 +20,15 @@ public class ButtonScripts : MonoBehaviour {
     public void StartGameScene()
     {
         SceneManager.LoadScene(1);
+    }
+
+    public void ProfileDropdownToggle()
+    {
+       this.profileDropdownMenu.SetActive(!this.profileDropdownMenu.activeSelf);
+    }
+
+    public void GameDropdownToggle()
+    {
+        this.gameDropdownMenu.SetActive(!this.gameDropdownMenu.activeSelf);
     }
 }
