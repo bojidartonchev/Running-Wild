@@ -19,6 +19,12 @@ namespace Assets.Assets.Scripts.Facebook
             FB.LogInWithReadPermissions(permissions, AuthCallBack);
         }
 
+        public void FBlogout()
+        {
+            FB.LogOut();
+            this.DealWithFBMenus(FB.IsLoggedIn);
+        }
+
         void AuthCallBack(IResult result)
         {
             if (result.Error != null)
