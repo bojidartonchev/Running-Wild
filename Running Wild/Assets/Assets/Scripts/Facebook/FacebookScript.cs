@@ -13,11 +13,15 @@ namespace Assets.Assets.Scripts.Facebook
         public GameObject profilePicture;
         public GameObject nameHolder;
 
+        //leaderboard
+        public GameObject leaderboardScroll;
+        public GameObject leaderboardElement;
+
         public void FBlogin()
         {
             List<string> permissions = new List<string>();
             permissions.Add("public_profile");
-
+            
             FB.LogInWithReadPermissions(permissions, AuthCallBack);
         }
 
@@ -40,6 +44,11 @@ namespace Assets.Assets.Scripts.Facebook
         public void ShareWithUsers()
         {
             FacebookManager.Instance.ShareWithUsers();
+        }
+
+        public void SetScore()
+        {
+            FacebookManager.Instance.SetScore();
         }
 
         void AuthCallBack(IResult result)
@@ -68,7 +77,13 @@ namespace Assets.Assets.Scripts.Facebook
         {
             FacebookManager.Instance.InitFB();
             this.DealWithFBMenus(FB.IsLoggedIn);
-        }       
+        }
+
+        private void QueryScores()
+        {
+            FacebookManager.Instance.QueryScores();
+            this.FillLeaderboard();
+        }
 
         private void DealWithFBMenus(bool isLoggedIn)
         {
@@ -76,6 +91,8 @@ namespace Assets.Assets.Scripts.Facebook
             {
                 this.dialogLoggedIn.SetActive(true);
                 this.dialogLoggedOut.SetActive(false);
+
+                this.QueryScores();
 
                 if (FacebookManager.Instance.ProfileName != null)
                 {
@@ -121,6 +138,65 @@ namespace Assets.Assets.Scripts.Facebook
                 yield return null;
             }
             this.DealWithFBMenus(FacebookManager.Instance.IsLoggedIn);
+        }
+
+        private void FillLeaderboard()
+        {
+            if (FacebookManager.Instance.ScoreData != null)
+            {
+                var data = FacebookManager.Instance.ScoreData;
+
+                foreach (Transform child in this.leaderboardScroll.transform)
+                {
+                    Destroy(child.gameObject);
+                }
+
+                foreach (Dictionary<string, object> element in data)
+                {
+                    var username = (element["user"] as Dictionary<string, object>)["name"];
+                    var userId = (element["user"] as Dictionary<string, object>)["id"];
+                    int score = int.Parse(element["score"].ToString());
+
+                    GameObject currentEntry = Instantiate(this.leaderboardElement);
+                    currentEntry.transform.SetParent(this.leaderboardScroll.transform,false);
+
+                    Transform currentNameContainer = currentEntry.transform.Find("EntryProfileName");
+                    Transform currentScoreContainer = currentEntry.transform.Find("EntryProfileScore");
+                    Text nameText = currentNameContainer.GetComponent<Text>();
+                    Text scoreText = currentScoreContainer.GetComponent<Text>();
+                    nameText.text = username.ToString();
+                    scoreText.text = score.ToString();
+
+                    Transform currentProfilePic = currentEntry.transform.Find("EntryProfilePic");
+                    Image avatarImage = currentProfilePic.GetComponent<Image>();
+
+                    FB.API("/"+userId+"/picture?type=square&height=128&width=128", HttpMethod.GET,
+                        delegate(IGraphResult result)
+                        {
+                            if (result.Error != null)
+                            {
+                                Debug.Log(result.Error);
+                            }
+                            else
+                            {
+                                avatarImage.sprite = Sprite.Create(result.Texture, new Rect(0, 0, 128, 128), new Vector2());
+                            }
+                        });
+                }
+            }
+            else
+            {
+                StartCoroutine("WaitForScrollData");
+            }
+        }
+
+        private IEnumerator WaitForScrollData()
+        {
+            while (FacebookManager.Instance.ScoreData == null)
+            {
+                yield return null;
+            }
+            this.FillLeaderboard();
         }
 
     }

@@ -2,11 +2,14 @@
 using Facebook.Unity;
 using System.Collections.Generic;
 using UnityEngine.UI;
+using System.Collections;
 using System;
+using Facebook.MiniJSON;
 
 public class FacebookManager : MonoBehaviour {
 
     private static FacebookManager instance;
+    private Dictionary<string,object> scoresList; 
 
     public static FacebookManager Instance
     {
@@ -24,7 +27,8 @@ public class FacebookManager : MonoBehaviour {
     public bool IsLoggedIn { get; set; }
     public string ProfileName { get; set; }
     public Sprite ProfilePic { get; set; }
-    public string AppLinkUrl { get; set; }   
+    public string AppLinkUrl { get; set; }
+    public List<object> ScoreData { get; set; } 
 	
     public void InitFB()
     {
@@ -80,6 +84,18 @@ public class FacebookManager : MonoBehaviour {
             null,
             ShareWithUsersCallback
             );
+    }
+
+    public void QueryScores()
+    {
+        FB.API("/app/scores?fields=score,user.limit(30)", HttpMethod.GET, ScoresCallback);
+    }
+
+    public void SetScore()
+    {
+        var scoreData = new Dictionary<string,string>();
+        scoreData["score"] = UnityEngine.Random.Range(10, 200).ToString();
+        FB.API("/me/scores",HttpMethod.POST, SetScoreCallback,scoreData);
     }
 
     void Awake()
@@ -193,5 +209,15 @@ public class FacebookManager : MonoBehaviour {
         {
             Debug.Log("Success on challange");
         }
+    }
+
+    private void ScoresCallback(IResult result)
+    {
+        this.ScoreData = (Json.Deserialize(result.RawResult) as Dictionary<string, object> )["data"] as List<object>;
+    }
+
+    private void SetScoreCallback(IResult result)
+    {
+        Debug.Log("" + result.RawResult);
     }
 }
