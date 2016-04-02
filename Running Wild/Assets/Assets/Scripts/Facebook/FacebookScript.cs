@@ -1,4 +1,5 @@
 ﻿using Facebook.Unity;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -10,6 +11,7 @@ namespace Assets.Assets.Scripts.Facebook
         public GameObject dialogLoggedIn;
         public GameObject dialogLoggedOut;
         public GameObject profilePicture;
+        public GameObject nameHolder;
 
         public void FBlogin()
         {
@@ -25,6 +27,21 @@ namespace Assets.Assets.Scripts.Facebook
             this.DealWithFBMenus(FB.IsLoggedIn);
         }
 
+        public void Share()
+        {
+            FacebookManager.Instance.Share();
+        }
+
+        public void Invite()
+        {
+            FacebookManager.Instance.Invite();  
+        }
+
+        public void ShareWithUsers()
+        {
+            FacebookManager.Instance.ShareWithUsers();
+        }
+
         void AuthCallBack(IResult result)
         {
             if (result.Error != null)
@@ -35,6 +52,8 @@ namespace Assets.Assets.Scripts.Facebook
             {
                 if (FB.IsLoggedIn)
                 {
+                    FacebookManager.Instance.IsLoggedIn = true;
+                    FacebookManager.Instance.GetProfile();
                     Debug.Log("FB is logged in");
                 }
                 else
@@ -47,33 +66,9 @@ namespace Assets.Assets.Scripts.Facebook
 
         void Awake()
         {
-            FB.Init(SetInit,OnHideUnity);
-        }
-
-        void SetInit()
-        {
-            if (FB.IsLoggedIn)
-            {
-                Debug.Log("FB is logged in");
-            }
-            else
-            {
-                Debug.Log("FB is NOT logged in");
-            }
+            FacebookManager.Instance.InitFB();
             this.DealWithFBMenus(FB.IsLoggedIn);
-        }
-
-        void OnHideUnity(bool isGameShown)
-        {
-            if (!isGameShown)
-            {
-                Time.timeScale = 0;
-            }
-            else
-            {
-                Time.timeScale = 1;
-            }
-        }
+        }       
 
         private void DealWithFBMenus(bool isLoggedIn)
         {
@@ -82,23 +77,51 @@ namespace Assets.Assets.Scripts.Facebook
                 this.dialogLoggedIn.SetActive(true);
                 this.dialogLoggedOut.SetActive(false);
 
-                //FB.API("/me?fields=first_name",HttpMethod.GET, DisplayUsername);
-                FB.API("/me/picture?type=square&height=128&width=128", HttpMethod.GET, DisplayProfilePic);
+                if (FacebookManager.Instance.ProfileName != null)
+                {
+                    Text userName = this.nameHolder.GetComponent<Text>();
+                    userName.text = "Hi, " + FacebookManager.Instance.ProfileName;
+                }
+                else
+                {
+                    StartCoroutine("WaitForProfileName");
+                }
+
+                if (FacebookManager.Instance.ProfilePic != null)
+                {
+                    Image currentPic = this.profilePicture.GetComponent<Image>();
+                    currentPic.sprite = FacebookManager.Instance.ProfilePic;
+                }
+                else
+                {
+                    StartCoroutine("WaitForProfilePic");
+                }
             }
             else
             {
                 this.dialogLoggedIn.SetActive(false);
                 this.dialogLoggedOut.SetActive(true);
+
             }
+        }
+        
+        private IEnumerator WaitForProfileName()
+        {
+            while (FacebookManager.Instance.ProfileName == null)
+            {
+                yield return null;
+            }
+            this.DealWithFBMenus(FacebookManager.Instance.IsLoggedIn);
         }
 
-        private void DisplayProfilePic(IGraphResult result)
+        private IEnumerator WaitForProfilePic()
         {
-            if (result.Texture != null)
+            while (FacebookManager.Instance.ProfilePic == null)
             {
-                Image profilePic = profilePicture.GetComponent<Image>();
-                profilePic.sprite = Sprite.Create(result.Texture,new Rect(0,0,128,128), new Vector2() );
+                yield return null;
             }
+            this.DealWithFBMenus(FacebookManager.Instance.IsLoggedIn);
         }
+
     }
 }
