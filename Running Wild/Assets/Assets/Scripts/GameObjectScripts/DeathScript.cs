@@ -12,7 +12,7 @@ namespace Assets.Assets.Scripts.GameObjectScripts
             GameObject.Find("Player").GetComponent<FirstPersonController>().enabled = false;
             GameObject.Find("AnimalGenerator").SetActive(false);
             GameObject.Find("EnvironmentGenerator").SetActive(false);
-            camera = GameObject.Find("Main Camera").GetComponent<Transform>();
+            camera = GameObject.Find("MainCamera").GetComponent<Transform>();
             GameObject.Find("GameUI").transform.Find("GameOverUI").transform.gameObject.SetActive(true);
         }
 	
