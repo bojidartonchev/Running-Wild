@@ -35,5 +35,6 @@ public class TerrainControl : MonoBehaviour {
             generator.Generate(detailScale, heightScale);
         }
         */
+        
     }
 }
