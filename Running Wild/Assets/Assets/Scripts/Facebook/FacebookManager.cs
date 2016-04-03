@@ -94,7 +94,7 @@ public class FacebookManager : MonoBehaviour {
     public void SetScore()
     {
         var scoreData = new Dictionary<string,string>();
-        scoreData["score"] = UnityEngine.Random.Range(10, 200).ToString();
+        scoreData["score"] = "500";
         FB.API("/me/scores",HttpMethod.POST, SetScoreCallback,scoreData);
     }
 

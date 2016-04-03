@@ -7,10 +7,12 @@ namespace Assets.Assets.Scripts.UI
     public class DistanceCounter : MonoBehaviour
     {
         public Text textField;
-
-        private float distance;
+        
         private Vector3 lastPosition;
         private int highestDistance;
+
+        public float Distance { get; private set; }
+       
 
         // Use this for initialization
         void Start ()
@@ -23,9 +25,9 @@ namespace Assets.Assets.Scripts.UI
         // Update is called once per frame
         void Update ()
         {
-            this.distance += Vector3.Distance(transform.position, lastPosition);
+            this.Distance += Vector3.Distance(transform.position, lastPosition);
             lastPosition = transform.position;
-            this.textField.text = String.Format("{0,10:D10}", (int)this.distance);
+            this.textField.text = String.Format("{0,10:D10}", (int)this.Distance);
         }
 
         void OnApplicationQuit()
@@ -35,9 +37,9 @@ namespace Assets.Assets.Scripts.UI
 
         public void SaveHighestScore()
         {
-            if (this.distance > this.highestDistance)
+            if (this.Distance > this.highestDistance)
             {
-                this.highestDistance = (int) this.distance;
+                this.highestDistance = (int) this.Distance;
                 PlayerPrefs.SetInt("highestScore", this.highestDistance);
             }
         }
