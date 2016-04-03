@@ -37,6 +37,12 @@ namespace Assets.Assets.Scripts.GameObjectScripts
             {
                 gameObject.AddComponent<TreeBump>();
             }
-        }    
+
+            if (collision.gameObject.tag == "Chest")
+            {
+                Destroy(collision.gameObject);
+            }
+        } 
+
     }
 }

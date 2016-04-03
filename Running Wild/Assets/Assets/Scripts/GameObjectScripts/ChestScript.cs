@@ -3,6 +3,8 @@ using System.Collections;
 
 public class ChestScript : MonoBehaviour {
 
+    public GameObject particle;
+
     private Camera cam;
     private bool startRotating;
     private int hashValue;
@@ -21,8 +23,15 @@ public class ChestScript : MonoBehaviour {
     {
         if (col.tag == "Player" && !isOpened)
         {
-            this.GetComponent<Animator>().SetTrigger(this.hashValue);
+            Invoke("ExecuteAnimation", 2);
             isOpened = true;
+            Instantiate(particle, transform.position, Quaternion.identity);
+            
         }
+    }
+
+    void ExecuteAnimation()
+    {
+        this.GetComponent<Animator>().SetTrigger(this.hashValue);
     }
 }
