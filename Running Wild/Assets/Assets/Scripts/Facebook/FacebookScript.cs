@@ -76,7 +76,19 @@ namespace Assets.Assets.Scripts.Facebook
         void Awake()
         {
             FacebookManager.Instance.InitFB();
-            this.DealWithFBMenus(FB.IsLoggedIn);
+            this.OnInitialize();
+        }
+
+        private void OnInitialize()
+        {
+            if (FB.IsInitialized)
+            {
+                this.DealWithFBMenus(FB.IsLoggedIn);
+            }
+            else
+            {
+                StartCoroutine("WaitForInitialize");
+            }
         }
 
         private void QueryScores()
@@ -197,6 +209,15 @@ namespace Assets.Assets.Scripts.Facebook
                 yield return null;
             }
             this.FillLeaderboard();
+        }
+
+        private IEnumerator WaitForInitialize()
+        {
+            while (!FB.IsInitialized)
+            {
+                yield return null;
+            }
+            this.OnInitialize();
         }
 
     }

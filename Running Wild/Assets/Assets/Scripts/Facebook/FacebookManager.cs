@@ -35,6 +35,7 @@ public class FacebookManager : MonoBehaviour {
         if (!FB.IsInitialized)
         {
             FB.Init(SetInit, OnHideUnity);
+
         }
         else
         {

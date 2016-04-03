@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class DeviceSettings : MonoBehaviour {
 
@@ -12,7 +13,7 @@ public class DeviceSettings : MonoBehaviour {
 	void Update () {
         if (Input.GetKey(KeyCode.Escape))
         {
-            Application.Quit();
+            SceneManager.LoadScene(0);
 
             return;
         }
