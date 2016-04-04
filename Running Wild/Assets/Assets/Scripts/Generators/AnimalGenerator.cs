@@ -30,7 +30,7 @@ public class AnimalGenerator : MonoBehaviour
         {
             var randomOffset = Random.Range(this.minYOffset, this.maxYOffset);
             GameObject animal = Instantiate(dinosaur);
-            animal.transform.parent = GameObject.Find("Animals").transform;
+            animal.transform.parent = transform;
             animal.transform.position = new Vector3(player.transform.position.x, 5, player.transform.position.z) + (transform.forward * this.spawnDistance) + (transform.right * randomOffset);
             animal.transform.LookAt(player.transform);
 
