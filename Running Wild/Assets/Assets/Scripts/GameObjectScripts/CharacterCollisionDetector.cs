@@ -21,6 +21,7 @@ namespace Assets.Assets.Scripts.GameObjectScripts
             if (collision.tag == "Animal")
             {
                 collision.gameObject.GetComponent<Animation>().Play("Attack");
+                collision.gameObject.GetComponent<AudioSource>().Play();
             }
         }
 
