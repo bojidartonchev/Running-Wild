@@ -19,5 +19,10 @@ namespace Assets.Assets.Scripts.UI
         {
             SceneManager.LoadScene(1);
         }
+
+        public void GoToGarage()
+        {
+            SceneManager.LoadScene(3);
+        }
     }
 }

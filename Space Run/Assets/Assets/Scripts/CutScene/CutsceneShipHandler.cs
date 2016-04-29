@@ -16,6 +16,10 @@ public class CutsceneShipHandler : MonoBehaviour
     public AudioClip smallBomb;
     public AudioClip bigBomb;
 
+    //Scene transition
+    public string scene;
+    public Color myColor;
+
     private Transform ship;
 
     void Start()
@@ -23,7 +27,6 @@ public class CutsceneShipHandler : MonoBehaviour
         this.ship = GetComponent<Transform>();
         InvokeRepeating("MoveTheShip", 0, 0.05f);
         Invoke("ExecuteBackExplosion",9f);
-
     }
 
     void MoveTheShip()
@@ -49,6 +52,7 @@ public class CutsceneShipHandler : MonoBehaviour
     {
         AudioSource.PlayClipAtPoint(bigBomb, new Vector3(222.4f, 138f, -210f),0.8f);
         explosion.SetActive(true);
+        Invoke("ChangeLevel", 10f);
     }
 
     void ExecuteFire()
@@ -69,6 +73,11 @@ public class CutsceneShipHandler : MonoBehaviour
 
         this.secondEngine.transform.position = new Vector3(this.secondEngine.transform.position.x + 0.02f, this.secondEngine.transform.position.y - 0.03f, this.secondEngine.transform.position.z - 0.01f);
         this.secondEngine.transform.Rotate(new Vector3(this.secondEngine.transform.rotation.x - 0.5f, this.secondEngine.transform.rotation.y + 0.2f, this.secondEngine.transform.rotation.z + 1.0f));
+    }
+
+    void ChangeLevel()
+    {
+        Initiate.Fade(scene, myColor, 0.3f);
     }
 
     void DestroyShip()
