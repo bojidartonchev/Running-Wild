@@ -7,10 +7,14 @@ public class AnimalScript : MonoBehaviour
     public float minDist;
     public float maxDist;
     public float moveSpeed;
+    public bool shouldDestroy;
     // Use this for initialization
     void Start()
     {
-        this.player = GameObject.Find("Player").GetComponent<Transform>();
+        if (player == null)
+        {
+            this.player = GameObject.Find("Player").GetComponent<Transform>();
+        }
     }
 
     // Update is called once per frame
@@ -31,7 +35,7 @@ public class AnimalScript : MonoBehaviour
 
         }
 
-        if (transform.position.z < this.player.position.z)
+        if (transform.position.z < this.player.position.z && shouldDestroy)
         {
             Destroy(gameObject);
         }

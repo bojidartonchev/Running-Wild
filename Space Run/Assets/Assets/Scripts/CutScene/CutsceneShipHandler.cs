@@ -80,8 +80,4 @@ public class CutsceneShipHandler : MonoBehaviour
         Initiate.Fade(scene, myColor, 0.3f);
     }
 
-    void DestroyShip()
-    {
-        Destroy(this);
-    }
 }
