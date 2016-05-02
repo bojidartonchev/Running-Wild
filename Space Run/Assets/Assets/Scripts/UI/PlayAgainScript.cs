@@ -22,7 +22,7 @@ namespace Assets.Assets.Scripts.UI
 
         public void GoToGarage()
         {
-            SceneManager.LoadScene(3);
+            SceneManager.LoadScene(4);
         }
     }
 }

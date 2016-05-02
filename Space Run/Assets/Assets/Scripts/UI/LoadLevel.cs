@@ -14,14 +14,19 @@ public class LoadLevel : MonoBehaviour
 
     public void StartLoading()
     {
+        int sceneToLoad = 3;
+        if (PlayerPrefs.GetInt("introPlayed")==0)
+        {
+            sceneToLoad = 1;
+        }
         loadingImage.SetActive(true);
-        StartCoroutine(LoadLevelWithBar());
+        StartCoroutine(LoadLevelWithBar(sceneToLoad));
     }
 
 
-    IEnumerator LoadLevelWithBar()
+    IEnumerator LoadLevelWithBar(int scene)
     {
-        async = SceneManager.LoadSceneAsync(1);
+        async = SceneManager.LoadSceneAsync(scene);
         while (!async.isDone)
         {
             loadingBar.value = async.progress;
