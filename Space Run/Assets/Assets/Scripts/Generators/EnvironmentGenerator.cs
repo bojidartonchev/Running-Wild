@@ -40,7 +40,7 @@ namespace Assets.Scripts.Generators
             {
                 int randomEnvironmentIndex = UnityEngine.Random.Range(0, 2);
                 GameObject currEnvironment = Instantiate(this.environments[randomEnvironmentIndex]);
-                currEnvironment.transform.parent = GameObject.Find("Environment").transform;
+                currEnvironment.transform.parent = this.transform;
                 var randomOffset = Random.Range(this.minYOffset, this.maxYOffset);
                 var randomTime = Random.Range(this.minSpawnTime, this.maxSpawnTime);
 
