@@ -41,9 +41,17 @@ namespace Assets.Assets.Scripts.GameObjectScripts
 
             if (collision.gameObject.tag == "Chest")
             {
+                this.CollectItem(collision.gameObject);
                 Destroy(collision.gameObject);
             }
-        } 
+        }
+
+        private void CollectItem(GameObject obj)
+        {
+            var partName = "LeftWingParts";
+            //var partName = obj.transform.transform.GetChild(0).name;
+            PlayerPrefs.SetInt(partName,PlayerPrefs.GetInt(partName)+1);
+        }
 
     }
 }

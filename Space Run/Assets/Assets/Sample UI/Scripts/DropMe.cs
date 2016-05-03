@@ -9,7 +9,13 @@ public class DropMe : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPointe
 	public Image receivingImage;
 	private Color normalColor;
 	public Color highlightColor = Color.yellow;
-	
+    private Transform grandParrent;
+
+    void Start()
+    {
+        this.grandParrent = this.transform.parent.transform.parent;
+    }
+
 	public void OnEnable ()
 	{
 		if (containerImage != null)
@@ -26,6 +32,9 @@ public class DropMe : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPointe
 		Sprite dropSprite = GetDropSprite (data);
 		if (dropSprite != null)
 			receivingImage.overrideSprite = dropSprite;
+
+	    this.UpdateShipProgress(data);
+
 	}
 
 	public void OnPointerEnter(PointerEventData data)
@@ -62,4 +71,24 @@ public class DropMe : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPointe
 		
 		return srcImage.sprite;
 	}
+
+    private void UpdateShipProgress(PointerEventData data)
+    {
+        string name = this.GetKey(data);
+        this.grandParrent.GetComponent<ShipProgress>().UpdateProgress(name);
+    }
+
+    private string GetKey(PointerEventData data)
+	{
+		var originalObj = data.pointerDrag;
+		if (originalObj == null)
+        { 
+			return null;
+        }
+
+        var parentName = originalObj.transform.parent.name;
+
+        return parentName;
+	}
+   
 }
