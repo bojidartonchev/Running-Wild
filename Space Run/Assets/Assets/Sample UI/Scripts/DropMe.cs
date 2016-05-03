@@ -9,11 +9,11 @@ public class DropMe : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPointe
 	public Image receivingImage;
 	private Color normalColor;
 	public Color highlightColor = Color.yellow;
-    private Transform grandParrent;
+    private GameObject parrent;
 
     void Start()
     {
-        this.grandParrent = this.transform.parent.transform.parent;
+        parrent = GameObject.Find("ShipSlotsPar");
     }
 
 	public void OnEnable ()
@@ -75,7 +75,8 @@ public class DropMe : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPointe
     private void UpdateShipProgress(PointerEventData data)
     {
         string name = this.GetKey(data);
-        this.grandParrent.GetComponent<ShipProgress>().UpdateProgress(name);
+        this.parrent.GetComponent<ShipProgress>().UpdateProgress(name);
+        Destroy(GameObject.Find("icon"));
     }
 
     private string GetKey(PointerEventData data)

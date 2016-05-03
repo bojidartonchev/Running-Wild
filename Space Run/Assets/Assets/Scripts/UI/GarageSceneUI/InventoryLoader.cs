@@ -12,7 +12,10 @@ public class InventoryLoader : MonoBehaviour
 	// Use this for initialization
 	void Start ()
 	{
-	    this.UpdateContainers();
+        PlayerPrefs.SetInt("RightWingParts",1);
+        PlayerPrefs.SetInt("EngineParts", 1);
+
+        this.UpdateContainers();
 	}
 	
 	// Update is called once per frame
