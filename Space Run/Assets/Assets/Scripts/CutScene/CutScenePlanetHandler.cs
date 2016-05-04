@@ -9,7 +9,7 @@ public class CutScenePlanetHandler : MonoBehaviour {
     // Use this for initialization
     void Start () {
         Invoke("ActivateSpider", 13.5f);
-        Invoke("ChangeLevel", 20f);
+        Invoke("ChangeLevel", 19.4f);
     }
 	
 	void ActivateSpider()
