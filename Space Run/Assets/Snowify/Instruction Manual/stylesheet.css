@@ -1,0 +1,101 @@
+/* CSS Document */
+
+body{
+	background-color:#EEEEEE;
+	position:relative;
+	margin:5 auto;
+	
+	padding-left:0px;
+	padding-right:0px;
+}
+
+.Inhoud{
+	position:relative;
+	font-family:Verdana, Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	padding:6px;
+	padding-left:8px;
+	padding-right:8px;
+}
+
+ul
+{
+	margin:0px;
+}
+
+.Titel{
+	font-size:34px;
+	font-variant:small-caps;
+	//color:White;
+	color:#3361B0;
+	text-align:center;
+}
+
+.Ondertitel
+{
+	font-size:20px;
+	font-variant:small-caps;
+	//color:White;
+}
+
+.Titel2{
+	font-size:24px;
+	font-variant:small-caps;
+	color:White;//#CCCCCC;
+	background-color:#3467B5;//#303030;
+	padding-left:3px;
+}
+
+.Titel3{
+	font-size:22px;
+	font-variant:small-caps;
+	color:#AAAAAA;
+	background-color:#222222;
+}
+
+.Titel4{
+	font-size:14px;
+	font-weight:bold;
+	color:#A0A0A0;
+	margin-bottom:4px;
+	margin-top:-2px;
+}
+
+.Icon{
+	margin-top:-4px;
+	margin-bottom:-4px;
+	margin-left:4px;
+	margin-right:4px;
+}
+
+.Centered
+{
+	text-align:center;
+	display:block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+
+.Back
+{
+	margin-top:8px;
+	font-size:14px;
+	text-align:center;
+}
+
+.Footer{
+	color:#999999;
+	font-size:11px;
+	text-align:center;
+	margin-top:55px;
+	margin-bottom:20px;
+}
+.Footer[class]{
+	color:#999999;
+	font-size:11px;
+	text-align:center;
+	margin-top:50px;
+	margin-bottom:5px;
+}
+

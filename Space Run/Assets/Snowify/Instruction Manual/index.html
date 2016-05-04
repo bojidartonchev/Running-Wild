@@ -1,0 +1,208 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<title>Snowify Manual</title>
+<link rel="stylesheet" href="stylesheet.css" />
+</head>
+<body class="FireFox">
+
+<div class="Inhoud">
+    <div class="Titel">Snowify</div>
+    <br />
+    <div class="Titel2">Instructions:</div>
+  <br />
+    After Importing the Snowify package, you will find the <a href="#Snowify Tool">Snowify tool</a> in Tools > Snowify.<br />
+    <br />
+    - Select the scene objects you want to snowify.<br />
+    - Set the snowify parameters to the desired values. (in case of doubt, leave them on the default value)<br />
+    - Press the SNOWIFY-button.<br />
+    - Snow objects will be generated and placed in the scene.<br />
+    <br />
+    If you want to create prefabs from the snow objects, or reuse the meshes some other way, you will have to use the <a href="#CreateMeshAsset Tool">CreateMeshAsset tool</a> (included in this package), you will find it in Tools > CreateMeshAsset. (<a href="#CreateMeshAsset Tool">see lower</a>)<br />
+    <br />
+    Since version 1.2, this package also contains the <a href="#SnowifyTerrain Tool">SnowifyTerrain tool</a>, you will find it in Tools > SnowifyTerrain. (<a href="#SnowifyTerrain Tool">see lower</a>)<br />
+    <br />
+    <br />
+  <div class="Titel2" id="Snowify Tool">Snowify Tool:</div>     
+    <br />    
+  <div class="Ondertitel" id="Basic">Basic:</div>    
+	<table>
+      <tr>
+        <td width="360"><img src="SnowifyBasic.PNG" alt="Snowify Basic Window" /></td>
+        <td>
+        <strong>- Snow Direction:</strong><br />
+        Choose how the snow will fall, either by inputting a direction vector, or by assigning an object who's local forward direction will be used.<br />
+        Default is straight down: Vector3(0,-1,0)<br />
+        <br />
+        <strong>- Snow Thickness:</strong><br />
+        Determines how thick/high the snow will be.<br />
+        <strong>- Height Segments:</strong><br />
+        the amount of detail in the snow's height/thickness.<br />
+        <br />
+        <strong>- Close Bottom:</strong><br />
+        Determines whether or not the snow will have completely closed meshes. Unnecessary normally, as these polygons are obscured by the mesh they rest upon.
+		Generally only usefull if the snow lies on semitransparent surfaces (like glass for example).<br />
+        <br />
+        <strong>- Only High Snow:</strong><br />
+        When true(toggle on), there will only be snow above a certain height (world space height).<br />
+        <strong>- Minimum Height:</strong><br />
+        The minimum height below which there will be no snow. (Only visible and adjustable when "Only High Snow" is toggled on)<br />
+        <br />
+        <strong>- Remove Covered Snow:</strong><br />
+        Determines whether or not there will be snow in covered areas, and how it will be calculated:<br />
+        <ul>	
+            <li><strong>Don't:</strong> no snow will be removed, covered areas will have just as much snow as when it isn't covered.</li>
+            <li><strong>When Island covered:</strong> Only removes snow if it lies on a connected group of triangles (= island) that is completely covered.<br />
+            <li><strong>When Fully covered:</strong> Only removes snow when it lies on a triangle (polygon) that is completely covered.<br />
+            <li><strong>When Partially covered:</strong> Removes snow when it lies on a triangle (polygon) that is at least partially covered.</ul>
+        The success/result of the last 2 (when fully or partially covered) depends on the topology and detail of the source mesh. Basically, the better the topology matches where there can and can't be snow, or the more detail the mesh has, the better these will work.<br />    
+        <br />
+        <strong>- Snow Material:</strong><br />
+        The snow material, can be any material you want. Default is the included material "Snow", which is a bumped specular material.<br />
+        <br />
+        <strong>- Save/Load:</strong><br />
+        Temporarily backup the selected snow mesh(es) with the "Save"-button. Reload it later with the "Load"-button (also only loads for selected objects). Only for temporarily use; changing scene, quiting unity, or closing the Snowify window can clear the backups.
+        </td>
+      </tr>
+    </table>  
+    <br />
+    <div class="Ondertitel" id="Advanced">Advanced:</div>  
+    <table>
+      <tr>
+        <td width="360"><img src="SnowifyAdvanced.PNG" alt="Snowify Advanced Window" /></td>
+        <td>
+        <strong>- Extrude along normal:</strong><br />
+        Determines whether the snow accumulates along the normal of the surface it rests on (toggle on), or in the direction the snow falls (toggle of)<br />
+        Default is false (toggle off).<br />
+        <strong>- Bulge Factor:</strong><br />
+        Determines how much the snow bulges at its borders, with 0 being no bulge, and 1 being a full bulge. It is generally undesirable to have a bulge higher than 1. When 0 (no bulge), the snow will be layered in a straight line.<br />
+        When set to 0, and "Smooth Iterations" is also set to 0, "Height Segments" should also best be set to 0, as there is no advantage for this then.<br />
+        Default is 0.55.<br />
+        <strong>- Max Angle:</strong><br />
+        Max angle of a surface for snow to rest on (in degrees). This is the angle between the snow direction and the (opposite of the) surface normal.<br />
+        When the snow is set to fall straight down, this is the slope angle of the surface.<br />
+        value will be clamped between 0 and 180 when "Extrude along normal" is on, otherwise it will be between 0 and 90.<br />
+        Default is 60.<br />
+        <strong>- Subdivisions:</strong><br />
+        The amount of subdivision iterations. Every iteration almost quadruples the tricount. (so use with care)<br />
+	    This is mostly usefull in combination with smoothing (see lower), or to get a more precise result from the "Remove covered snow"-option, but otherwise it should best be kept at 0 as it has no other benefit.<br />
+	    Default is 0.<br />
+        <strong>- Smooth Iterations:</strong><br />
+        The amount of smoothing iterations. Uses a custom distance-based algorithm that makes sure the snow stays on the surface it rests upon.<br />
+	    This can make the snow look more natural, but it doesn't work well in all cases, it works best when the snow surfaces have a convex shape.<br />
+        Default is 0.<br />
+	    <br />
+        <strong>- UV Scale:</strong><br />
+        Scales the snow's uv-coordiantes. This is similar to setting the tiling parameters in the material. (Can ofcourse be used in conjunction)<br />
+        Default is 1.<br />
+        <br />
+        <strong>- Prefix and Suffix:</strong><br />
+        For naming the generated snow objects, their name will be: prefix + source object's name + suffix.<br />
+        Default Prefix is empty, Suffix is "_snow".<br />
+        <br />
+        <strong>- Static Flags:</strong><br />
+        The static flags of the Snow GameObjects.<br />
+        Default is Occluder, Occludee and Batching static.<br />
+        <br />
+        <strong>- Delete old snow object.</strong><br />
+        Determines whether or not the old snow object (associated with the selected source object) will be deleted when a new snow object is created (for the selected source object).<br />
+        The snowify window keeps track of the snow objects, and which objects in the scene it has created snow objects for. However, when changing scenes or reinitializing the snowify window, it will have lost this information. Therefore you will then have to delete old snow-objects manually when creating new ones.<br />
+        Default is true (toggle on).
+        </td>
+      </tr>
+    </table> 
+    <br />
+    <br />
+  	<div class="Titel2" id="CreateMeshAsset Tool">CreateMeshAsset Tool:</div>
+    <br />
+    By default the created snow objects will have unique meshes that only exist in the scene they're in, not as an asset in the project.<br />
+    This tool makes assets for these meshes.<br />
+    <br />
+    - Select the snow objects who's meshes you want to store.<br />
+    - Set the parameters to the desired values.<br />
+    - Press the "Create Mesh Asset(s)"-button.<br />
+    - Meshes will be stored in the desired location, and the snow in the scene will reference these now instead.<br />
+    <br />
+    <br />
+    <table>
+      <tr>
+        <td width="305"><img src="CreateMeshAssets.PNG"  alt="CreateMeshAssets window" align ="left" /></td>
+        <td>
+        <strong>- Folder:</strong><br />
+        The path to were the mesh asset(s) will be stored in your project. Relative to the Assets folder.<br />
+        Folders will be created if they don't exist already.<br />
+        Default is "Snowify/Meshes"<br />
+        <br />
+        <strong>- Rename Mesh:</strong><br />
+        Determines how to name the mesh asset(s), either it will inherit the object's name (toggle off), or you will have to specify a new name (toggle on).<br />
+        Note that existing assets will never be overwritten, the newly created mesh assets will have an extra suffix in case of naming conflict. <br />
+        Also note that when selecting multiple meshes, renaming them will give them all the same name (but with the extra suffix).<br />
+        Default is false (toggle off).
+        </td>
+      </tr>
+    </table> 
+    <br />
+    <br />
+    <div class="Titel2" id="SnowifyTerrain Tool">SnowifyTerrain Tool:</div>
+    <br />
+    A simple tool to help paint snow on a terrain.<br />
+    For convenience, the snowify terrain process is divided into painting the snow and offsetting the snow. (opposed to all at once, as is the case for the normal Snowify-tool)<br />
+    Be carefull when using this, as the terrain could be permanently altered.<br />
+    <br />
+    - Select the terrain you want to snowify.<br />
+    - Set the snowify parameters to the desired values. (in case of doubt, leave them on the default value)<br />
+    - Press the SNOWIFY-button.<br />
+    - Snow will be painted (and removed where necessary) on the terrain.<br />
+    - (Optionally paint snow manually.)<br />
+    - Set the offset snow parameters to the desired values. (in case of doubt, leave them on the default value)<br />
+    - Press the Offset Snow-button.<br />
+    - The terain will be higher where there is snow, to give the impression that the snow has a thickness.<br />
+    <br />
+    <br />
+    <table>
+      <tr>
+        <td width="323"><img src="SnowifyTerrain.PNG"  alt="SnowifyTerrain window" align ="left" /></td>
+        <td>
+        <strong>- Snow Texture Index:</strong><br />
+        Determines which of the terrain textures is the snow texture. (0-based index)<br />
+        <strong>- Default Texture Index:</strong><br />
+        Determines which of the terrain textures is the default texture. (0-based index)<br />
+        This texture is used when removing snow from places that use no other texture.<br />
+        <br />
+        <strong>- Fade Angle:</strong><br />
+        Similar to the "Max Angle" Snowify-setting: The max angle of a surface for snow to rest on (in degrees). This is the angle between the snow direction and the (opposite of the) surface normal.<br />
+        Start Fade Angle is the angle below which snow is 100% and above which the snow fades out.<br />
+        End Fade Angle is the angle above which snow is 0% and below which the snow fades in.<br />
+        <br />
+        <strong>- Fade Height:</strong><br />
+        Similar to the "Minimum Height" Snowify-setting: The minimum height below which there will be no snow.<br />
+        Start Fade Height is the height above which snow is 100% and below which the snow fades out.<br />
+        End Fade Height is the height below which snow is 0% and above which the snow fades in.<br />
+        <br />
+        <strong>- Snow Direction:</strong><br />
+        Similar to the "Snow Direction" Snowify-setting: Choose how the snow will fall, either by inputting a direction vector, or by assigning an object who's local forward direction will be used.<br />
+        Default is straight down: Vector3(0,-1,0)<br />
+        <br />
+        <strong>- Remove Snow (button):</strong><br />
+        Removes snow from the terrain, and paints the default texture where snow was 100%.<br />
+        If you simply want to revert the terrain to before the snowify, it is best to use the Load button instead (if the terrain was saved using the Save-button or Auto-Save before the snowify ofcourse).<br />
+        <br />
+        <strong>- Snow Height:</strong><br />
+        Similar to the "Snow Thickness" Snowify-setting: Determines how thick/high the snow will be. (offset snow parameter)<br />
+        <strong>- Extra Snow Samples:</strong><br />
+        Sample distance to determine which snow to offset. The more samples, the further snow has the be away from no-snow-areas to be offset. (offset snow parameter)<br />
+        <strong>- Snowcurve:</strong><br />
+        Determines the ratio between snow percentage and offset height. (offset snow parameter)<br />
+        <br />
+        <strong>- Auto-Save/Load:</strong><br />
+        Automatically loads the terrain's height and splatmaps first when pressing the Snowify button, or saves instead if there was no save file already.<br />
+        <strong>- Save/Load:</strong><br />
+        Similar to the Save/Load Snowify-buttons: Temporarily backup the selected terrain's height and splatmaps with the "Save"-button. Reload it later with the "Load"-button. Only for temporarily use; changing scene, quiting unity, or closing the SnowifyTerrain window can clear the backups.<br />
+        </td>
+      </tr>
+    </table> 
+  <div class="Footer">Copyright 2013 Steven Craeynest</div>
+</div>
+</body>
+</html>
