@@ -39,7 +39,7 @@ namespace Assets.Assets.Scripts.GameObjectScripts
                 gameObject.AddComponent<TreeBump>();
             }
 
-            if (collision.gameObject.tag == "Chest")
+            if (collision.gameObject.tag == "Part")
             {
                 this.CollectItem(collision.gameObject);
                 Destroy(collision.gameObject);
@@ -48,8 +48,8 @@ namespace Assets.Assets.Scripts.GameObjectScripts
 
         private void CollectItem(GameObject obj)
         {
-            var partName = "LeftWingParts";
-            //var partName = obj.transform.transform.GetChild(0).name;
+            var partName = obj.transform.name.Replace("(Clone)","");
+            Debug.Log(partName);
             PlayerPrefs.SetInt(partName,PlayerPrefs.GetInt(partName)+1);
         }
 

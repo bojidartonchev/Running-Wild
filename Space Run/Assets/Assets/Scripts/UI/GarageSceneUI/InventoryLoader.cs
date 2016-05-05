@@ -12,9 +12,6 @@ public class InventoryLoader : MonoBehaviour
 	// Use this for initialization
 	void Start ()
 	{
-        PlayerPrefs.SetInt("RightWingParts",1);
-        PlayerPrefs.SetInt("EngineParts", 1);
-
         this.UpdateContainers();
 	}
 	

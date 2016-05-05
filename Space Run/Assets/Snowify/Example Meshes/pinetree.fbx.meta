@@ -3,6 +3,40 @@ guid: 3727c368f6366c74ab1c35bda4e64a3f
 ModelImporter:
   serializedVersion: 19
   fileIDToRecycleName:
+    100000: Cone
+    100002: Cone_001
+    100004: Cone_002
+    100006: Cone_003
+    100008: Cone_004
+    100010: Cube
+    100012: //RootNode
+    100014: Sphere
+    100016: Sphere_001
+    400000: Cone
+    400002: Cone_001
+    400004: Cone_002
+    400006: Cone_003
+    400008: Cone_004
+    400010: Cube
+    400012: //RootNode
+    400014: Sphere
+    400016: Sphere_001
+    2300000: Cone
+    2300002: Cone_001
+    2300004: Cone_002
+    2300006: Cone_003
+    2300008: Cone_004
+    2300010: Cube
+    2300012: Sphere
+    2300014: Sphere_001
+    3300000: Cone
+    3300002: Cone_001
+    3300004: Cone_002
+    3300006: Cone_003
+    3300008: Cone_004
+    3300010: Cube
+    3300012: Sphere
+    3300014: Sphere_001
     4300000: Cube
     4300002: Sphere_001
     4300004: Cone_004
@@ -11,6 +45,8 @@ ModelImporter:
     4300010: Cone_002
     4300012: Cone_001
     4300014: Cone
+    7400000: Default Take
+    11100000: //RootNode
   materials:
     importMaterials: 1
     materialName: 0
