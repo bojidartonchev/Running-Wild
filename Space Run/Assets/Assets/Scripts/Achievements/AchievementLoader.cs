@@ -48,7 +48,7 @@ public class AchievementLoader : MonoBehaviour {
         if (PlayerPrefs.GetInt(def.name) != 1)
         {
             //notifing
-            Notifier.Instance.Notify(def.title);
+            Notifier.Instance.Notify(def.title,def.description,NotificationType.Achievement);
             
             //saving
             PlayerPrefs.SetInt(def.name, 1);

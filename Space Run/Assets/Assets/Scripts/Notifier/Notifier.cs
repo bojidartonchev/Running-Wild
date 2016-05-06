@@ -1,18 +1,18 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
+using Assets.Assets.Scripts.Notifier;
 using UnityEngine.UI;
 
 public class Notifier : MonoBehaviour {
 
     private static Notifier instance;
     private GameObject notifierWindow;
-    private float visibilityTime = 2f;
-    private Queue<string> notifications = new Queue<string>();
+    private float visibilityTime = 3f;
+    private Queue<Notification> notifications = new Queue<Notification>();
     private Vector2 boxPossition = new Vector2(600, 200);
     private bool showingNotification;
-    private string messageToShow;
-    
 
     public static Notifier Instance
     {
@@ -38,9 +38,10 @@ public class Notifier : MonoBehaviour {
         }
     }
 
-    public void Notify(string message)
+    public void Notify(string message, string description, NotificationType type)
     {
-        notifications.Enqueue(message);
+        notifications.Enqueue(new Notification(message, description,type));
+        
         if (!showingNotification)
         {
             StartCoroutine(ShowNotificationBox());
@@ -53,7 +54,8 @@ public class Notifier : MonoBehaviour {
 
         while (showingNotification)
         {
-            this.messageToShow = notifications.Dequeue();
+            var messageToShow = notifications.Dequeue();
+            this.FillBox(messageToShow);
             // show box
             yield return StartCoroutine(AnimateBox());
             if (notifications.Count == 0)
@@ -72,30 +74,32 @@ public class Notifier : MonoBehaviour {
     IEnumerator AnimateBox()
     {
         // come in
-        float t = 0;
-        while (t < 1)
-        {
-            t += Time.deltaTime;
-            boxPossition.y = Mathf.Lerp(-200, 100, t);
-            yield return null;
-        }
+        this.NotifierWindow.GetComponent<Animator>().SetTrigger("Show");
 
         yield return new WaitForSeconds(this.visibilityTime);
 
         // go out
-        while (t > 0)
-        {
-            t -= Time.deltaTime;
-            boxPossition.y = Mathf.Lerp(-200, 100, t);
-            yield return null;
-        }
+        this.NotifierWindow.GetComponent<Animator>().SetTrigger("Hide");
+        yield return new WaitForSeconds(1.5f);
     }
-    void OnGUI()
+
+    private void FillBox(Notification notification)
     {
-        if (showingNotification)
-        {
-            this.NotifierWindow.transform.position = new Vector2(this.NotifierWindow.transform.position.x, boxPossition.y);
-            this.NotifierWindow.transform.Find("Title").GetComponent<Text>().text = this.messageToShow;
-        }
+        this.NotifierWindow.transform.Find("FormTitle").GetComponent<Text>().text = ToDescriptionString(notification.Type);
+        this.NotifierWindow.transform.Find("Title").GetComponent<Text>().text = notification.Title;
     }
+
+    private static string ToDescriptionString(NotificationType val)
+    {
+        DescriptionAttribute[] attributes = (DescriptionAttribute[])val.GetType().GetField(val.ToString()).GetCustomAttributes(typeof(DescriptionAttribute), false);
+        return attributes.Length > 0 ? attributes[0].Description : string.Empty;
+    }
+}
+
+public enum NotificationType
+{
+    [Description("Achievement Completed")]
+    Achievement,
+    [Description("Error")]
+    Error
 }
