@@ -1,0 +1,1 @@
+﻿The example will only work when no achievements file is present in the resources folder in the root of the project. The supplied achievements with the example are overwritten when that file is present.
