@@ -24,6 +24,11 @@ public class PauseScript : MonoBehaviour
     {
         this.player.GetComponent<FirstPersonController>().enabled = false;
         this.pauseCanvas.enabled = true;
+        this.PauseTime();
+    }
+
+    public void PauseTime()
+    {
         Time.timeScale = 0;
     }
 

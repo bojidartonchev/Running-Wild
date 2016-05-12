@@ -58,6 +58,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
         private float m_NextStep;
         private bool m_Jumping;
         private AudioSource m_AudioSource;
+        private bool tiltInput;
         // Use this for initialization
         private void Start()
         {
@@ -71,9 +72,13 @@ namespace UnityStandardAssets.Characters.FirstPerson
             m_Jumping = false;
             m_AudioSource = GetComponent<AudioSource>();
             m_MouseLook.Init(transform, m_Camera.transform);
+            LoadInputSelected();
         }
 
-
+        public void LoadInputSelected()
+        {
+            this.tiltInput = PlayerPrefs.GetInt("MovementInputType") == 0;
+        }
         // Update is called once per frame
         private void Update()
         {
@@ -215,12 +220,36 @@ namespace UnityStandardAssets.Characters.FirstPerson
 
         private void GetInput(out float speed)
         {
-            RotateView(); ;
+            RotateView();
+            float horizontal=0;
+            float vertical= 30f;
             // Read input
-            float horizontal = Input.acceleration.x * 60f;
-            float vertical = 30f;//SPEED IS HARDCODED HERE
-            m_MouseLook.MaximumZ = Input.acceleration.x * -30;
-            m_MouseLook.MinimumZ = Input.acceleration.x * -30;
+            if (this.tiltInput)
+            {
+                horizontal = Input.acceleration.x*60f;
+                m_MouseLook.MaximumZ = Input.acceleration.x*-30;
+                m_MouseLook.MinimumZ = Input.acceleration.x*-30;
+            }
+            else
+            {
+                int multipl = 0;
+                if (Input.touchCount > 0)
+                {
+                    Touch touch = Input.GetTouch(0);
+                    if (touch.position.x < Screen.width/2)
+                    {
+                        multipl = -1;
+                    }
+                    else if (touch.position.x > Screen.width/2)
+                    {
+                        multipl = 1;
+                    }
+                    horizontal = multipl*60f;
+
+                }
+                m_MouseLook.MaximumZ = multipl * -30;
+                m_MouseLook.MinimumZ = multipl * -30;
+            }
             bool waswalking = m_IsWalking;
 
 #if !MOBILE_INPUT
