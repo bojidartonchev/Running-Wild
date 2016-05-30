@@ -29,8 +29,8 @@ public class AchievementLoader : MonoBehaviour {
                 AchievementManager.Instance.MarkCompleted(def.name);
         }
         //deletes achievement history
-        PlayerPrefs.DeleteAll();
-        AchievementManager.Instance.Clear();
+        //PlayerPrefs.DeleteAll();
+        //AchievementManager.Instance.Clear();
     }
 	
 	// Update is called once per frame

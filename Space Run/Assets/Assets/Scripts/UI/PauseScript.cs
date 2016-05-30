@@ -5,7 +5,8 @@ using UnityStandardAssets.Characters.FirstPerson;
 public class PauseScript : MonoBehaviour
 {
     public Canvas pauseCanvas;
-    
+    public GameObject inputChoiceLabel;
+
     private GameObject player;
 
     // Use this for initialization
@@ -44,7 +45,7 @@ public class PauseScript : MonoBehaviour
 
     void OnApplicationPause(bool pauseStatus)
     {
-        if (pauseStatus)
+        if (pauseStatus && !inputChoiceLabel.activeSelf)
         {
             this.Pause();
         }

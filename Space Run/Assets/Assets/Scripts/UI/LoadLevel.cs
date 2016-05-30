@@ -6,7 +6,6 @@ using UnityEngine.SceneManagement;
 
 public class LoadLevel : MonoBehaviour
 {
-
     public GameObject loadingBar;
     public GameObject loadingImage;
 
