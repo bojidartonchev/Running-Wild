@@ -3,11 +3,14 @@ using UnityEngine;
 
 namespace Assets.Assets.Scripts.GameObjectScripts
 {
+
     public class CharacterCollisionDetector : MonoBehaviour {
-    
+
+        public int CurrentRunParts;
         public bool IsDead { get; private set; }
         // Use this for initialization
         void Start () {
+            this.CurrentRunParts = 0;
             this.IsDead = false;
         }
 	
@@ -48,6 +51,7 @@ namespace Assets.Assets.Scripts.GameObjectScripts
 
         private void CollectItem(GameObject obj)
         {
+            this.CurrentRunParts++;
             var partName = obj.transform.name.Replace("(Clone)","");
             Debug.Log(partName);
             PlayerPrefs.SetInt(partName,PlayerPrefs.GetInt(partName)+1);

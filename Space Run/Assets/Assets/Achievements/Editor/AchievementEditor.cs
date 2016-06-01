@@ -290,7 +290,7 @@ public class AchievementEditor : EditorWindow
         splitterRect = GUILayoutUtility.GetRect(new GUIContent(""), (GUIStyle)"box", GUILayout.Width(5), GUILayout.ExpandHeight(true));
         splitterControlId = GUIUtility.GetControlID(FocusType.Passive, splitterRect);
         EditorGUIUtility.AddCursorRect(splitterRect, MouseCursor.ResizeHorizontal);
-        GUI.DrawTexture(new Rect(splitterRect.xMin, splitterRect.center.y - 5, splitterIcon.width, splitterIcon.height), splitterIcon);
+        GUI.DrawTexture(new Rect(0, 10 - 5, 5, 10), splitterIcon);
 
         if (Event.current.type == EventType.mouseDown && splitterRect.Contains(Event.current.mousePosition))
         {

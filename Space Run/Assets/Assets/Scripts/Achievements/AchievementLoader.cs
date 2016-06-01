@@ -1,14 +1,16 @@
 ﻿using UnityEngine;
-using System.Collections;
 using Achievement;
 using System.Collections.Generic;
 using Assets.Assets.Scripts.UI;
+using Assets.Assets.Scripts.GameObjectScripts;
+using System.Linq;
 
 public class AchievementLoader : MonoBehaviour {
 
     public GameObject player;
     
     private List<AchievementVariable<int>> distance;
+    private List<AchievementVariable<int>> parts;
     private AchievementDefinition completedAchievement = null;
 
     // Use this for initialization
@@ -20,7 +22,22 @@ public class AchievementLoader : MonoBehaviour {
         distance.Add(new AchievementVariable<int>("500"));
         distance.Add(new AchievementVariable<int>("1250"));
         distance.Add(new AchievementVariable<int>("2500"));
-        
+        distance.Add(new AchievementVariable<int>("5000"));
+        distance.Add(new AchievementVariable<int>("10000"));
+        distance.Add(new AchievementVariable<int>("25000"));
+        distance.Add(new AchievementVariable<int>("50000"));
+        distance.Add(new AchievementVariable<int>("100000"));
+        distance.Add(new AchievementVariable<int>("250000"));
+
+        parts = new List<AchievementVariable<int>>();
+        parts.Add(new AchievementVariable<int>("10p"));
+        parts.Add(new AchievementVariable<int>("20p"));
+        parts.Add(new AchievementVariable<int>("50p"));
+        parts.Add(new AchievementVariable<int>("100p"));
+
+        PlayerPrefs.SetInt("DistanceAchievementCount", distance.Count);
+        PlayerPrefs.SetInt("PartsAchievementCount", parts.Count);
+
         AchievementManager.Instance.onComplete += AchievementComplete;
 
         foreach (AchievementDefinition def in AchievementManager.Instance.Definitions)
@@ -38,7 +55,17 @@ public class AchievementLoader : MonoBehaviour {
         foreach(AchievementVariable<int> dist in distance)
         {
             if (dist.Value <= int.Parse(dist.identifier)){
+
                 dist.Value = (int)player.GetComponent<DistanceCounter>().Distance;
+            }
+        }
+        foreach (AchievementVariable<int> prt in parts)
+        {
+            string temp = prt.identifier;
+            temp = temp.Substring(0, temp.Length - 1);
+            if (prt.Value <= int.Parse(temp))
+            {
+                prt.Value = (int)player.GetComponent<CharacterCollisionDetector>().CurrentRunParts;
             }
         }
     }
@@ -51,6 +78,13 @@ public class AchievementLoader : MonoBehaviour {
             Notifier.Instance.Notify(def.title,def.description,NotificationType.Achievement);
             
             //saving
+            if(def.categoryId==1)
+            {
+                PlayerPrefs.SetInt("DistanceCompleted", PlayerPrefs.GetInt("DistanceCompleted") + 1);
+            } else
+            {
+                PlayerPrefs.SetInt("PartsCompleted", PlayerPrefs.GetInt("PartsCompleted") + 1);
+            }
             PlayerPrefs.SetInt(def.name, 1);
             PlayerPrefs.Save();
         }
