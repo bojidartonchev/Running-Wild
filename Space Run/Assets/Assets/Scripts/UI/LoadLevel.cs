@@ -29,7 +29,7 @@ public class LoadLevel : MonoBehaviour
         async = SceneManager.LoadSceneAsync(scene);
         while (!async.isDone)
         {            
-            loadingBar.GetComponent<ProgressBarBehaviour>().IncrementValue(async.progress*100);
+            loadingBar.GetComponent<ProgressRadialBehaviour>().IncrementValue(async.progress*100);
             yield return null;
         }
 

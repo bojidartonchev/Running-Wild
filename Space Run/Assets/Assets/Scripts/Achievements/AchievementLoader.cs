@@ -35,9 +35,6 @@ public class AchievementLoader : MonoBehaviour {
         parts.Add(new AchievementVariable<int>("50p"));
         parts.Add(new AchievementVariable<int>("100p"));
 
-        PlayerPrefs.SetInt("DistanceAchievementCount", distance.Count);
-        PlayerPrefs.SetInt("PartsAchievementCount", parts.Count);
-
         AchievementManager.Instance.onComplete += AchievementComplete;
 
         foreach (AchievementDefinition def in AchievementManager.Instance.Definitions)
@@ -46,8 +43,8 @@ public class AchievementLoader : MonoBehaviour {
                 AchievementManager.Instance.MarkCompleted(def.name);
         }
         //deletes achievement history
-        PlayerPrefs.DeleteAll();
-        AchievementManager.Instance.Clear();
+        //PlayerPrefs.DeleteAll();
+        //AchievementManager.Instance.Clear();
     }
 	
 	// Update is called once per frame
