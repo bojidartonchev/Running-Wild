@@ -6,7 +6,9 @@ namespace Assets.Assets.Scripts.GameObjectScripts
 
     public class CharacterCollisionDetector : MonoBehaviour {
 
-        public int CurrentRunParts;
+        public AudioClip collectClip;
+
+        public int CurrentRunParts { get; private set; }
         public bool IsDead { get; private set; }
         // Use this for initialization
         void Start () {
@@ -44,6 +46,11 @@ namespace Assets.Assets.Scripts.GameObjectScripts
 
             if (collision.gameObject.tag == "Part")
             {
+                if (this.collectClip != null)
+                {
+                    AudioSource.PlayClipAtPoint(this.collectClip, this.transform.localPosition);
+                }
+                
                 this.CollectItem(collision.gameObject);
                 Destroy(collision.gameObject);
             }

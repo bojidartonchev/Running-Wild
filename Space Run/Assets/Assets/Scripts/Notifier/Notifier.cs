@@ -73,6 +73,12 @@ public class Notifier : MonoBehaviour {
 
     IEnumerator AnimateBox()
     {
+        //plays sound if there is any attached
+        if (this.NotifierWindow.GetComponent<AudioSource>() != null)
+        {
+            this.NotifierWindow.GetComponent<AudioSource>().Play();
+        }
+
         // come in
         this.NotifierWindow.GetComponent<Animator>().SetTrigger("Show");
 
