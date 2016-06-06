@@ -17,11 +17,13 @@ namespace Assets.Assets.Scripts.UI
 
         public void PlayAgain()
         {
+            GameObject.Find("Player").GetComponent<DistanceCounter>().SaveHighestScore();
             SceneManager.LoadScene(3);
         }
 
         public void GoToGarage()
         {
+            GameObject.Find("Player").GetComponent<DistanceCounter>().SaveHighestScore();
             SceneManager.LoadScene(4);
         }
     }

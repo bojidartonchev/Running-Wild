@@ -41,6 +41,7 @@ namespace Assets.Assets.Scripts.UI
             {
                 this.highestDistance = (int) this.Distance;
                 PlayerPrefs.SetInt("highestScore", this.highestDistance);
+                FacebookManager.Instance.SetScore(this.highestDistance);
             }
         }
 

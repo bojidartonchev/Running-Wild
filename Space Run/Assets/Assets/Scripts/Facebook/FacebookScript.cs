@@ -46,11 +46,6 @@ namespace Assets.Assets.Scripts.Facebook
             FacebookManager.Instance.ShareWithUsers();
         }
 
-        public void SetScore()
-        {
-            FacebookManager.Instance.SetScore();
-        }
-
         void AuthCallBack(IResult result)
         {
             if (result.Error != null)

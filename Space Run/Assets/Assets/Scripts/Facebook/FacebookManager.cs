@@ -55,10 +55,10 @@ public class FacebookManager : MonoBehaviour {
         FB.FeedShare(
             string.Empty,
             new Uri(this.AppLinkUrl),
-            "Hello this is the title",
-            "Hello this is the caption",
-            "Check out this game",
-            new Uri("http://image.way2enjoy.com/pic/45/77/99/7/600full-little-caprice.jpg"),
+            "Space Run",
+            "New level of space advanture",
+            "Check out it now!",
+            new Uri("http://s33.postimg.org/apb0wf7tb/icon1024x1024.png"),
             string.Empty,
             ShareCallback
             );
@@ -92,10 +92,10 @@ public class FacebookManager : MonoBehaviour {
         FB.API("/app/scores?fields=score,user.limit(30)", HttpMethod.GET, ScoresCallback);
     }
 
-    public void SetScore()
+    public void SetScore(float score)
     {
         var scoreData = new Dictionary<string,string>();
-        scoreData["score"] = "500";
+        scoreData["score"] = ((int)score).ToString();
         FB.API("/me/scores",HttpMethod.POST, SetScoreCallback,scoreData);
     }
 
