@@ -17,7 +17,7 @@ public class LoadLevel : MonoBehaviour
         int sceneToLoad = 3;
         if (PlayerPrefs.GetInt("introPlayed")==0)
         {
-            sceneToLoad = 1;
+            sceneToLoad = 3;//1
         }
         loadingImage.SetActive(true);
         StartCoroutine(LoadLevelWithBar(sceneToLoad));

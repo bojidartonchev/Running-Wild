@@ -21,8 +21,9 @@ namespace Assets.Assets.Scripts.Facebook
         {
             List<string> permissions = new List<string>();
             permissions.Add("public_profile");
+            permissions.Add("publish_actions");
             
-            FB.LogInWithReadPermissions(permissions, AuthCallBack);
+            FB.LogInWithPublishPermissions(permissions, AuthCallBack);
         }
 
         public void FBlogout()

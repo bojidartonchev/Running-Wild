@@ -52,14 +52,11 @@ public class FacebookManager : MonoBehaviour {
 
     public void Share()
     {
-        FB.FeedShare(
-            string.Empty,
+        FB.ShareLink(
             new Uri(this.AppLinkUrl),
             "Space Run",
             "New level of space advanture",
-            "Check out it now!",
             new Uri("http://s33.postimg.org/apb0wf7tb/icon1024x1024.png"),
-            string.Empty,
             ShareCallback
             );
     }
@@ -68,7 +65,7 @@ public class FacebookManager : MonoBehaviour {
     {
         FB.Mobile.AppInvite(
             new Uri(this.AppLinkUrl),
-            new Uri("http://image.way2enjoy.com/pic/45/77/99/7/600full-little-caprice.jpg"),
+            new Uri("http://s33.postimg.org/apb0wf7tb/icon1024x1024.png"),
             InviteCallback
             );
     }
