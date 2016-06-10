@@ -44,7 +44,7 @@ namespace Assets.Scripts.Generators
                 var randomOffset = Random.Range(this.minYOffset, this.maxYOffset);
                 var randomTime = Random.Range(this.minSpawnTime, this.maxSpawnTime);
 
-                currEnvironment.transform.position = new Vector3(this.player.transform.position.x, 0, this.player.transform.position.z) + (this.transform.forward * this.spawnDistance) + (this.transform.right * randomOffset);
+                currEnvironment.transform.position = new Vector3(this.player.transform.position.x, -3f, this.player.transform.position.z) + (this.transform.forward * this.spawnDistance) + (this.transform.right * randomOffset);
                 currEnvironment.transform.rotation = Quaternion.Euler(0, Random.Range(0, 360), 0);
           
                 yield return new WaitForSeconds(randomTime);
