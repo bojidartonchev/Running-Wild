@@ -20,11 +20,8 @@ namespace Assets.Assets.Scripts.Facebook
 
         public void FBlogin()
         {
-            List<string> permissions = new List<string>();
-            permissions.Add("public_profile");
-            permissions.Add("publish_actions");
-            
-            FB.LogInWithPublishPermissions(permissions, AuthCallBack);
+            FB.LogInWithReadPermissions(new List<string>() { "public_profile", "user_friends" }, AuthCallBack);
+            FB.LogInWithPublishPermissions(new List<string>() { "publish_actions" }, AuthCallBack);
         }
 
         public void FBlogout()

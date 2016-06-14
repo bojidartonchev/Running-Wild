@@ -10,6 +10,9 @@ public class GameSceneSettings : MonoBehaviour
 
 	// Use this for initialization
 	void Start () {
+        // Disables screen dimming
+        Screen.sleepTimeout = SleepTimeout.NeverSleep;
+
         AudioListener.volume = PlayerPrefs.GetFloat("volume");
         if (PlayerPrefs.GetFloat("volume") == 0)
         {

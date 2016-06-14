@@ -26,6 +26,7 @@ public class FacebookManager : MonoBehaviour {
 
     public bool IsLoggedIn { get; set; }
     public string ProfileName { get; set; }
+    public string UserId { get; private set; }
     public Sprite ProfilePic { get; set; }
     public string AppLinkUrl { get; set; }
     public List<object> ScoreData { get; set; } 
@@ -47,6 +48,7 @@ public class FacebookManager : MonoBehaviour {
     {
         FB.API("/me?fields=first_name",HttpMethod.GET, DisplayUsername);
         FB.API("/me/picture?type=square&height=128&width=128", HttpMethod.GET, DisplayProfilePic);
+        FB.API("/me", HttpMethod.GET, SaveUserId);
         FB.GetAppLink(DealWithAppLink);
     }
 
@@ -137,6 +139,18 @@ public class FacebookManager : MonoBehaviour {
         }
     }
 
+    private void SaveUserId(IResult result)
+    {
+        if (result.Error == null)
+        {
+            this.UserId = result.ResultDictionary["id"].ToString();
+        }
+        else
+        {
+            Debug.Log(result.Error);
+        }
+    }
+
     private void DisplayUsername(IResult result)
     {
         if (result.Error == null)
@@ -157,7 +171,7 @@ public class FacebookManager : MonoBehaviour {
         }
         else
         {
-            this.AppLinkUrl = "http://google.com"; //In case of an error
+            this.AppLinkUrl = "https://fb.me/1018316168245169"; //In case of an error
         }
     }
 

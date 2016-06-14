@@ -6,8 +6,9 @@ public class GarageSceneSettings : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-	
-	}
+        // Enables screen dimming
+        Screen.sleepTimeout = SleepTimeout.SystemSetting;
+    }
 	
 	// Update is called once per frame
 	void Update () {

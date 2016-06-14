@@ -28,22 +28,27 @@ namespace Assets.Assets.Scripts.Facebook
                
                 foreach (FacebookUser user in playersTillNow)
                 {
-                    this.SpawnLabel(user.ID);
+                    this.SpawnLabel(user.ID, user.Name);
                 }
                 this.userContainer.Remove(currentDistance);
             }
         }
 
-        private void SpawnLabel( string currId)
+        private void SpawnLabel(string currId, string name)
         {
+            if (currId.Equals(FacebookManager.Instance.UserId))
+            {
+                return;                
+            }
             
-            GameObject currentEntry = (GameObject) Instantiate(this.labelObject,new Vector3(this.player.transform.position.x, this.player.transform.position.y+10, this.player.transform.position.z+100),Quaternion.Euler(0f,180f,Random.Range(-15,15)));
+            GameObject currentEntry = (GameObject) Instantiate(this.labelObject,new Vector3(this.player.transform.position.x, this.player.transform.position.y+10, this.player.transform.position.z+100),Quaternion.Euler(0f,0f,Random.Range(-15,15)));
             currentEntry.transform.SetParent(this.transform, false);
 
             Transform currentProfilePic = currentEntry.transform.Find("EntryProfilePic");
             SpriteRenderer avatarImage = currentProfilePic.GetComponent<SpriteRenderer>();
+            currentEntry.transform.Find("EntryProfileName").GetComponent<TextMesh>().text = name;
 
-            FB.API("/" + currId + "/picture?type=square&height=480&width=480", HttpMethod.GET,
+            FB.API("/" + currId + "/picture?type=square&height=512&width=512", HttpMethod.GET,
                 delegate (IGraphResult result)
                 {
                     if (result.Error != null)
@@ -73,6 +78,7 @@ namespace Assets.Assets.Scripts.Facebook
                     {
                         return;
                     }
+                    score -= 100; //to spawn it 100 meters earlier
                     
                     if (!this.userContainer.ContainsKey(score))
                     {
