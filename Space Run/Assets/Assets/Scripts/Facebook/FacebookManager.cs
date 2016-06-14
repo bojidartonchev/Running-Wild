@@ -217,5 +217,6 @@ public class FacebookManager : MonoBehaviour {
     private void SetScoreCallback(IResult result)
     {
         Debug.Log("" + result.RawResult);
+        this.QueryScores(); //updates leaderboard
     }
 }

@@ -1,6 +1,7 @@
 ﻿using Facebook.Unity;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -21,8 +22,9 @@ namespace Assets.Assets.Scripts.Facebook
         {
             List<string> permissions = new List<string>();
             permissions.Add("public_profile");
+            permissions.Add("publish_actions");
             
-            FB.LogInWithReadPermissions(permissions, AuthCallBack);
+            FB.LogInWithPublishPermissions(permissions, AuthCallBack);
         }
 
         public void FBlogout()
@@ -54,15 +56,15 @@ namespace Assets.Assets.Scripts.Facebook
             }
             else
             {
-                if (FB.IsLoggedIn)
+                if (FB.IsLoggedIn && AccessToken.CurrentAccessToken.Permissions.Contains("publish_actions"))
                 {
                     FacebookManager.Instance.IsLoggedIn = true;
                     FacebookManager.Instance.GetProfile();
-                    Debug.Log("FB is logged in");
+                    Debug.Log("FB is logged in and we have publish actions");
                 }
                 else
                 {
-                    Debug.Log("FB is NOT logged in");
+                    Debug.Log("FB is NOT logged in or we dont have publish actions");
                 }
                 this.DealWithFBMenus(FB.IsLoggedIn);
             }

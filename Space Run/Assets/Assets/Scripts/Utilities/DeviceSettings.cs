@@ -8,10 +8,16 @@ public class DeviceSettings : MonoBehaviour
 
 	// Use this for initialization
 	void Start () {
-        // Disable screen dimming
-        Screen.sleepTimeout = SleepTimeout.NeverSleep;
+        // Enables screen dimming
+        Screen.sleepTimeout = SleepTimeout.SystemSetting;
 
-	    AudioListener.volume = PlayerPrefs.GetFloat("volume");
+        if (PlayerPrefs.GetInt("firstPlay") == 0)
+        {
+            PlayerPrefs.SetFloat("volume", 1f);
+            PlayerPrefs.SetInt("firstPlay",1);
+        }
+
+        AudioListener.volume = PlayerPrefs.GetFloat("volume");
         if (PlayerPrefs.GetFloat("volume") == 0)
 	    {
 	        this.soundToggle.GetComponent<Toggle>().isOn = false;
