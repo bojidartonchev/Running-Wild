@@ -14,6 +14,7 @@ public class EndGameScript : MonoBehaviour {
     public GameObject rightCyllinder;
     public GameObject ship;
 
+
     private bool Up = false;
     private float shake = 0.05f;
     private float shipSpeed = 0.01f;
@@ -33,6 +34,7 @@ public class EndGameScript : MonoBehaviour {
         StartCoroutine(ActivateRigidBody(rightCyllinder, 20.5f));
         StartCoroutine(ActivateRigidBody(leftCyllinder, 20.6f));
         StartCoroutine(ShipTakeOff(21.3f));
+
     }
 
     IEnumerator ActivateObject(GameObject obj, float delayTime)
@@ -82,6 +84,7 @@ public class EndGameScript : MonoBehaviour {
         StopCoroutine(shipCoroutine);
 
     }
+
 
     void Update()
     {
