@@ -34,4 +34,9 @@ public class DeviceSettings : MonoBehaviour
         AudioListener.volume = 1 - AudioListener.volume;
         PlayerPrefs.SetFloat("volume", AudioListener.volume);
     }
+
+    public void GoToGarage()
+    {
+        SceneManager.LoadScene(4);
+    }
 }

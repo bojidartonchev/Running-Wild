@@ -32,7 +32,6 @@ public class CutsceneShipHandler : MonoBehaviour
     void MoveTheShip()
     {
         ship.localPosition = new Vector3(ship.localPosition.x - 0.09f, ship.localPosition.y - 0.06f, ship.localPosition.z - 0.10f);
-
     }
 
     void ExecuteBackExplosion()

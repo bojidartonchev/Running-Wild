@@ -23,6 +23,10 @@ public class ShipProgress : MonoBehaviour {
     public void UpdateProgress(string key)
     {
         int count = PlayerPrefs.GetInt(key);
+        if (count >= 5)
+        {
+            count = 5;
+        }
         this.inventory.GetComponent<InventoryLoader>().ResetCount(key);
         this.shipProgress += count;
         this.SaveCurrentShipProgress(this.shipProgress);
